@@ -1,40 +1,52 @@
 
 # PyPortal NPR Station
 
-Use a [Adafruit PyPortal](https://www.adafruit.com/product/4116) to show what's currently playing on an [NPR](https://npr.org) station.
+Use an [Adafruit PyPortal](https://www.adafruit.com/product/4116) to show what's currently playing on an [NPR](https://npr.org) station.
 
 The portal defaults to [WBGO 88.3 FM](https://wbgo.org) Newark Public Radio, the world’s premiere jazz public radio station.
 
-![PyPortal NPR Station](./docs/pyportal-npr-01.png)
+![PyPortal NPR Station](./docs/pyportal-npr-03.png)
+_Great for listening and learning._
+
+
+## Prerequisites
+
+- [Adafruit PyPortal](https://www.adafruit.com/product/4116)
+- CircuitPython 5.3.1 – [download the UF2 from S3](https://adafruit-circuit-python.s3.amazonaws.com/bin/pyportal/en_US/adafruit-circuitpython-pyportal-en_US-5.3.1.uf2)
+- MicroSD card – any size is fine
 
 ## Initial Setup
 
-_Links to PyPortal documentation is available at the bottom of this page._
+1\. Plug the MicroSD card into the PyPortal
 
-1\. Add a MicroSD card _(optional)_:
+The app uses the MicroSD card for local storage when it downloads and displays album art.
 
-The app needs a MicroSD card in order to download and display album art.
+Any size MicroSD card is fine since the app will write over the same file – `/sd/cover-image.bmp` – on each download.
 
-Note: If you see a "timeout waiting for v2 card" error, you may have an SD card not supported by the PyPortal.  See [this blog post](https://www.devdungeon.com/content/pyportal-circuitpy-tutorial-adabox-011) for more insights on that issue.
+Make sure the card is **FAT32 formatted**.
 
-2\. Update `secrets.py`:
+2\. Update `secrets.py`
 
 ```
 cp ./CIRCUITPY/secrets.py.tmpl ./CIRCUITPY/secrets.py
 vim ./CIRCUITPY/secrets.py
 ```
 
-Adafruit IO credentials are used to convert and display album artwork.
+[Adafruit IO](https://io.adafruit.com/) credentials are used to convert and display album artwork.  Signing up is free and easy, not to mention it's a great service.
 
-3\. Copy code to PyPortal:
+3\. Copy code to PyPortal
+
+Drag and drop all the files from the repo's `CIRCUITPY` directory into the PyPortal's `CIRCUITPY` directory, or from the command-line:
 
 ```
-cp -Rai ./CIRCUITPY/* /Volumes/CIRCUITPY/
+rsync -avh ./CIRCUITPY/ /Volumes/CIRCUITPY
 ```
+
+_Links to PyPortal documentation are available at the bottom of this page._
 
 ## Changing Stations
 
-A few updates are needed to change:
+A few updates are needed to change the station:
 
 1\. Find the `UCS` value for the [NPR Composer API](http://api.composer.nprstations.org/) for the target station:
 
@@ -85,7 +97,6 @@ convert ./120x50-source-image.png -type truecolor /Volumes/CIRCUITPY/53c7dbe1e1c
 #### NPR API URLs
 
 - http://api.composer.nprstations.org/
-
 - https://api.composer.nprstations.org/v1/widget/5834b54de1c8aada9f4d7a9e/playlist?limit=2
 
 - Example NPR Composer API UCS values:
@@ -97,15 +108,26 @@ convert ./120x50-source-image.png -type truecolor /Volumes/CIRCUITPY/53c7dbe1e1c
 
 - Adafruit product page
   - https://www.adafruit.com/product/4116
-
 - Adafruit tutorial
   - https://learn.adafruit.com/adafruit-pyportal
-
 - Adafruit PyPortal Hardware FAQ
   - https://learn.adafruit.com/adafruit-pyportal/pyportal-hardware-faq
-
 - Latest CircuitPython
   - https://circuitpython.org/board/pyportal/
-
 - Latest CircuitPython Libraries
   - https://circuitpython.org/libraries
+
+## Action Shots
+
+![PyPortal NPR Station](./docs/pyportal-npr-02.png)
+_The perfect companion for [Amazon Alexa](https://alexa.amazon.com)!_
+
+## FAQs
+
+#### MicroSD: "Timeout waiting for v2 card"
+
+If you see a "timeout waiting for v2 card" error, you may have an SD card not supported by the PyPortal.
+
+See [this blog post](https://www.devdungeon.com/content/pyportal-circuitpy-tutorial-adabox-011) for more insights on that issue._
+
+

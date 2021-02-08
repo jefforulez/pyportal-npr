@@ -159,7 +159,7 @@ class StationPortal():
       self.cover_file.close()
 
     try:
-      image_url = self.pyportal.image_converter_url( "xx"+source_url, 100, 100 )
+      image_url = self.pyportal.image_converter_url( source_url, 100, 100 )
       print( "image_url: ", image_url )
 
       cover_filename = "/sd/cover-image.bmp"
@@ -169,10 +169,10 @@ class StationPortal():
       self.cover_file = open( cover_filename, "rb" )
       cover_bitmap = displayio.OnDiskBitmap( self.cover_file )
 
-    except RuntimeError as e:
+    except Exception as e:
       print( "error rendering cover art, source_url:", source_url )
-      cover_bitmap = displayio.Bitmap( width=100, height=100, value_count=1 )
-      cover_bitmap.fill( 0x0 )
+      cover_bitmap = displayio.Bitmap( 100, 100, 1 )
+      cover_bitmap.fill( 0 )
 
     self.pyportal.splash.append( displayio.TileGrid(
         cover_bitmap,
