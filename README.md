@@ -1,16 +1,23 @@
 
-# NPR Station PyPortal
+# PyPortal NPR Station
 
 Use a [Adafruit PyPortal](https://www.adafruit.com/product/4116) to show what's currently playing on an [NPR](https://npr.org) station.
 
 The portal defaults to [WBGO 88.3 FM](https://wbgo.org) Newark Public Radio, the world’s premiere jazz public radio station.
 
+![PyPortal NPR Station](./docs/pyportal-npr-01.png)
 
 ## Initial Setup
 
 _Links to PyPortal documentation is available at the bottom of this page._
 
-1\. Update `secrets.py`:
+1\. Add a MicroSD card _(optional)_:
+
+The app needs a MicroSD card in order to download and display album art.
+
+Note: If you see a "timeout waiting for v2 card" error, you may have an SD card not supported by the PyPortal.  See [this blog post](https://www.devdungeon.com/content/pyportal-circuitpy-tutorial-adabox-011) for more insights on that issue.
+
+2\. Update `secrets.py`:
 
 ```
 cp ./CIRCUITPY/secrets.py.tmpl ./CIRCUITPY/secrets.py
@@ -19,7 +26,7 @@ vim ./CIRCUITPY/secrets.py
 
 Adafruit IO credentials are used to convert and display album artwork.
 
-2\. Copy code to PyPortal:
+3\. Copy code to PyPortal:
 
 ```
 cp -Rai ./CIRCUITPY/* /Volumes/CIRCUITPY/
