@@ -131,6 +131,7 @@ convert ./120x50-source-image.png -type truecolor /Volumes/CIRCUITPY/53c7dbe1e1c
 ## Action Shots
 
 ![PyPortal NPR Station](./docs/pyportal-npr-02.png)
+
 _The perfect companion for [Amazon Alexa](https://alexa.amazon.com)._
 
 ## FAQs
