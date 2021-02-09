@@ -6,6 +6,7 @@ Use an [Adafruit PyPortal](https://www.adafruit.com/product/4116) to show what's
 The project defaults to member-supported [WBGO 88.3 FM](https://wbgo.org) Newark Public Radio, the world’s premiere jazz public radio station.
 
 ![PyPortal NPR Station](./docs/pyportal-npr-03.png)
+
 _Great for listening and learning about Jazz._
 
 
