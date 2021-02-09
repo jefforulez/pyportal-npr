@@ -74,7 +74,7 @@ Edit `code.py` and change the following lines:
 ```
 STATION_DEFAULT_SHOW_NAME = "WRTI | Your Classical & Jazz Source"
 STATION_DEFAULT_HOST_NAME = "WRTI Staff"
-STATION_PLAYLIST_SLUG     = "53c7dbe1e1c8b9c77b4b9b6e"  # <~ the new UC
+STATION_PLAYLIST_UCS      = "53c7dbe1e1c8b9c77b4b9b6e"  # <~ the new UC
 ```
 
 3\. Add a station logo _(optional)_:
