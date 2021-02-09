@@ -97,6 +97,11 @@ convert ./120x50-source-image.png -type truecolor /Volumes/CIRCUITPY/53c7dbe1e1c
 
 `convert` can be installed via [Homebrew](https://formulae.brew.sh/formula/imagemagick), if necessary.
 
+## Action Shots
+
+![PyPortal NPR Station](./docs/pyportal-npr-02.png)
+
+_The perfect companion for [Amazon Alexa](https://alexa.amazon.com)._
 
 ## Related Info
 
@@ -127,12 +132,6 @@ convert ./120x50-source-image.png -type truecolor /Volumes/CIRCUITPY/53c7dbe1e1c
 - Latest CircuitPython Libraries
   - https://circuitpython.org/libraries
   - This project uses the v5.3.x libraries
-
-## Action Shots
-
-![PyPortal NPR Station](./docs/pyportal-npr-02.png)
-
-_The perfect companion for [Amazon Alexa](https://alexa.amazon.com)._
 
 ## FAQs
 
