@@ -5,10 +5,9 @@ Use an [Adafruit PyPortal](https://www.adafruit.com/product/4116) to show what's
 
 The project defaults to member-supported [WBGO 88.3 FM](https://wbgo.org) Newark Public Radio, the world’s premiere jazz public radio station.
 
-![PyPortal NPR Station](./docs/pyportal-npr-03.png)
+![PyPortal NPR Station Action Shot](./docs/pyportal-npr-03.png)
 
 _Great for listening and learning about Jazz._
-
 
 ## Prerequisites
 
@@ -99,9 +98,9 @@ convert ./120x50-source-image.png -type truecolor /Volumes/CIRCUITPY/53c7dbe1e1c
 
 ## Action Shots
 
-![PyPortal NPR Station](./docs/pyportal-npr-02.png)
-
 _The perfect companion for [Amazon Alexa](https://alexa.amazon.com)._
+
+![Action Shot #2](./docs/pyportal-npr-02.png)
 
 ## Related Info
 
@@ -116,7 +115,6 @@ _The perfect companion for [Amazon Alexa](https://alexa.amazon.com)._
 - Example NPR Composer API UCS values:
   - WBGO 88.3 FM: `5834b54de1c8aada9f4d7a9e`
   - WRTI 90.1 FM: `53c7dbe1e1c8b9c77b4b9b6e`
-
 
 #### Adafruit
 
