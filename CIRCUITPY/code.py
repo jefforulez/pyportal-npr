@@ -115,6 +115,11 @@ class StationPortal():
         self._updateTrack( curr_track )
         self.track_id = curr_track_id
 
+    else:
+      self._setTrack( "Track currently unavailable" )
+      self._setArtist( None )
+      self._updateCoverart( None )
+
 
   def _updateShow( self, curr_program ):
     if "name" in curr_program:
@@ -148,29 +153,37 @@ class StationPortal():
     elif "artworkUrl100" in curr_track:
       self._updateCoverart( curr_track["artworkUrl100"] )
     else:
-      self._updateCoverart( None )
+      self._updateCoverart()
 
 
   def _setShow( self, val ):
-    if ( len( val ) > 35 ):
-      self.show_text.text = ( val )[0:32] + "..."
+    if ( val == None ):
+      self.show_text.text = ""
+    if ( len( val ) > 30 ):
+      self.show_text.text = ( val )[0:30] + "..."
     else:
       self.show_text.text = val
 
   def _setHost( self, val ):
-    if ( len( val ) > 30 ):
+    if ( val == None ):
+      self.host_text.text = ""
+    elif ( len( val ) > 30 ):
       self.host_text.text = "with " + ( val )[0:30] + "..."
     else:
       self.host_text.text = "with " + val
 
   def _setTrack( self, val ):
-    if ( len( val ) > 35 ):
-      self.track_text.text = ( val )[0:32] + "..."
+    if ( val == None ):
+      self.track_text.text = ""
+    elif ( len( val ) > 30 ):
+      self.track_text.text = ( val )[0:30] + "..."
     else:
       self.track_text.text = val
 
   def _setArtist( self, val ):
-    if ( len( val ) > 35 ):
+    if ( val == None ):
+      self.artist_text.text = ""
+    elif ( len( val ) > 30 ):
       self.artist_text.text = ( "by " + val )[0:30] + "..."
     else:
       self.artist_text.text = "by " + val
@@ -219,7 +232,7 @@ if __name__ == "__main__":
     try:
       stationPortal.fetch()
 
-    except ( OSError, RuntimeError, KeyError ) as e:
+    except ( OSError, RuntimeError, KeyError, TypeError ) as e:
       print( "Unexpected error occured while fetching data", e )
 
     time.sleep(60)
