@@ -53,7 +53,7 @@ A few updates are needed to change the station:
 
 1\. Find the `UCS` value for the [NPR Composer API](http://api.composer.nprstations.org/) for the target station:
 
-This can usually be found by going to the station's online playlist search and using [Chrome Dev Tools](https://developers.google.com/web/tools/chrome-devtools) to find the background XHR requests to `/v1/widget/.../playlist`.
+This can usually be found by going to the station's online playlist search and using [Chrome Dev Tools](https://developers.google.com/web/tools/chrome-devtools) to find the background XHR requests to `/v1/widget/.../playlist` or `/v1/widget/.../now`.
 
 For example, go to [WRTI 90.1 FM](https://wrti.org/) playlist search:
 
@@ -111,6 +111,9 @@ _The perfect companion for [Amazon Alexa](https://alexa.amazon.com)._
 
 - WBGO Playlist
   - https://api.composer.nprstations.org/v1/widget/5834b54de1c8aada9f4d7a9e/playlist?limit=2
+
+- WBGO Now Playing
+  - https://api.composer.nprstations.org/v1/widget/5834b54de1c8aada9f4d7a9e/now?format=json
 
 - Example NPR Composer API UCS values:
   - WBGO 88.3 FM: `5834b54de1c8aada9f4d7a9e`

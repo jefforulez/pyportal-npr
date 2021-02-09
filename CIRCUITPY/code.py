@@ -37,7 +37,7 @@ class StationPortal():
   def __init__( self ):
 
     self.pyportal = PyPortal(
-        url = f"https://api.composer.nprstations.org/v1/widget/{STATION_PLAYLIST_UCS}/playlist?limit=2",
+        url = f"https://api.composer.nprstations.org/v1/widget/{STATION_PLAYLIST_UCS}/now?format=json",
         status_neopixel = board.NEOPIXEL,
         default_bg = 0x000000 # cwd + "/station_background.bmp",
       )
@@ -99,14 +99,48 @@ class StationPortal():
     print( "Fetched new data, type:", type(data) )
     print( "data:", data )
 
-    playlist = data["playlist"][-1]
-    curr_track = playlist["playlist"][-1]
+    curr_program = data["onNow"]["program"]
+    curr_track = data["onNow"]["song"]
 
-    if ( self.track_id != curr_track["id"] ):
-      print( "Loading new track, id: ", curr_track["id"] )
-      self.track_id = curr_track["id"]
-      self._updateTrack( playlist, curr_track )
+    if ( self.track_id != curr_track["_id"] ):
+      print( "Loading new track, id: ", curr_track["_id"] )
+      self._updateShow( curr_program )
+      self._updateTrack( curr_track )
       print( "Finished loading new track,", curr_track["trackName"] )
+      self.track_id = curr_track["_id"]
+
+
+  def _updateShow( self, curr_program ):
+    if "name" in curr_program:
+      self._setShow( curr_program["name"] )
+    else:
+      self._setShow( STATION_DEFAULT_SHOW_NAME )
+
+    if "hosts" in curr_program:
+      if len(curr_program["hosts"]) > 1:
+        self._setHost( curr_program["hosts"][0]["name"] + " et al" )
+      else:
+        self._setHost( curr_program["hosts"][0]["name"] )
+    else:
+      self._setHost( STATION_DEFAULT_HOST_NAME )
+
+  def _updateTrack( self, curr_track ):
+
+    if "trackName" in curr_track:
+      self._setTrack( curr_track["trackName"] )
+    else:
+      self._setTrack( "Unknown Title" )
+
+    if "artistName" in curr_track:
+      self._setArtist( curr_track["artistName"] )
+    else:
+      self._setArtist( "Unknown Artist" )
+
+    if "imageURL" in curr_track:
+      self._updateCoverart( curr_track["imageURL"] )
+    else:
+      self._updateCoverart( None )
+
 
   def _setShow( self, val ):
     if ( len( val ) > 35 ):
@@ -131,34 +165,6 @@ class StationPortal():
       self.artist_text.text = ( "by " + val )[0:30] + "..."
     else:
       self.artist_text.text = "by " + val
-
-
-  def _updateTrack( self, playlist, curr_track ):
-
-    if "name" in playlist:
-      self._setShow( playlist["name"] )
-    else:
-      self._setShow( STATION_DEFAULT_SHOW_NAME )
-
-    if "hosts" in playlist:
-      self._setHost( playlist["hosts"] )
-    else:
-      self._setHost( STATION_DEFAULT_HOST_NAME )
-
-    if "trackName" in curr_track:
-      self._setTrack( curr_track["trackName"] )
-    else:
-      self._setTrack( "Unknown Title" )
-
-    if "artistName" in curr_track:
-      self._setArtist( curr_track["artistName"] )
-    else:
-      self._setArtist( "Unknown Artist" )
-
-    if "album_art" in curr_track:
-      self._updateCoverart( curr_track["album_art"] )
-    else:
-      self._updateCoverart( None )
 
 
   def _updateCoverart( self, source_url ):
@@ -204,7 +210,7 @@ if __name__ == "__main__":
     try:
       stationPortal.fetch()
 
-    except ( OSError, RuntimeError ) as e:
+    except ( OSError, RuntimeError, KeyError ) as e:
       print( "Unexpected error occured while fetching data", e )
 
     time.sleep(60)
