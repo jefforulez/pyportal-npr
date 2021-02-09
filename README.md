@@ -122,13 +122,17 @@ _The perfect companion for [Amazon Alexa](https://alexa.amazon.com)._
 
 - Adafruit PyPortal product page
   - https://www.adafruit.com/product/4116
+
 - Adafruit PyPortal tutorial
   - https://learn.adafruit.com/adafruit-pyportal
+
 - Adafruit PyPortal Hardware FAQ
   - https://learn.adafruit.com/adafruit-pyportal/pyportal-hardware-faq
+
 - Latest CircuitPython for PyPortal
   - https://circuitpython.org/board/pyportal/
   - This project uses CircuitPython v5.3.x
+
 - Latest CircuitPython Libraries
   - https://circuitpython.org/libraries
   - This project uses the v5.3.x libraries

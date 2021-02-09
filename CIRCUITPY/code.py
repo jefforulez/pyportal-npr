@@ -157,28 +157,34 @@ class StationPortal():
 
     if "album_art" in curr_track:
       self._updateCoverart( curr_track["album_art"] )
+    else:
+      self._updateCoverart( None )
 
 
   def _updateCoverart( self, source_url ):
 
-    if ( self.cover_file ):
-      self.cover_file.close()
+    cover_filename = "/sd/cover-image.bmp"
+    cover_bitmap = None
 
-    try:
-      image_url = self.pyportal.image_converter_url( source_url, 100, 100 )
-      print( f"Converting image, image_url: {image_url}" )
+    if ( source_url ):
+      try:
+        image_url = self.pyportal.image_converter_url( source_url, 100, 100 )
+        print( f"Converting image, image_url: {image_url}" )
 
-      cover_filename = "/sd/cover-image.bmp"
+        self.pyportal.wget( image_url, cover_filename, chunk_size=512 )
 
-      self.pyportal.wget( image_url, cover_filename, chunk_size=512 )
+        if ( self.cover_file ):
+          self.cover_file.close()
+        self.cover_file = open( cover_filename, "rb" )
 
-      self.cover_file = open( cover_filename, "rb" )
-      cover_bitmap = displayio.OnDiskBitmap( self.cover_file )
+        cover_bitmap = displayio.OnDiskBitmap( self.cover_file )
 
-    except ( OSError, KeyError, Exception ) as e:
-      print( f"Error rendering cover art, source_url: {source_url}" )
+      except ( OSError, KeyError, Exception ) as e:
+        print( f"Error rendering cover art, source_url: {source_url}" )
+
+    if ( cover_bitmap == None ):
       cover_bitmap = displayio.Bitmap( 100, 100, 1 )
-      cover_bitmap.fill( 0 )
+      cover_bitmap.fill( 0x0 )
 
     self.pyportal.splash[ self.artworkTileGroupIndex ] = displayio.TileGrid(
       cover_bitmap,
