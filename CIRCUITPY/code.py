@@ -26,7 +26,7 @@ STATION_PLAYLIST_UCS      = "5834b54de1c8aada9f4d7a9e"
 # the current working directory (where this file is)
 cwd = ( "/" + __file__ ).rsplit( '/', 1 )[0]
 
-medium_font = bitmap_font.load_font( cwd + "/fonts/Arial-ItalicMT-17.bdf" )
+text_font = bitmap_font.load_font( cwd + "/fonts/Arial-ItalicMT-17.bdf" )
 
 #
 # function
@@ -42,27 +42,10 @@ class StationPortal():
         default_bg = 0x000000 # cwd + "/station_background.bmp",
       )
 
-    station_slug = f"{cwd}/{STATION_PLAYLIST_UCS}_slug.bmp"
-    try:
-      self.slug_file = open( station_slug, "rb" )
-      slug_bitmap = displayio.OnDiskBitmap( self.slug_file )
-
-      self.pyportal.splash.append( displayio.TileGrid(
-          slug_bitmap,
-          pixel_shader = displayio.ColorConverter(),
-          width = 1,
-          height = 1,
-          x = 190,
-          y = 170
-        ))
-    except OSError as e:
-      print( f"unable to open station slug bitmap, station_slug: {station_slug}" )
-
-
-    self.show_text   = Label( medium_font, max_glyphs=40 )
-    self.host_text   = Label( medium_font, max_glyphs=40 )
-    self.track_text  = Label( medium_font, max_glyphs=40 )
-    self.artist_text = Label( medium_font, max_glyphs=40 )
+    self.show_text   = Label( text_font, max_glyphs=40 )
+    self.host_text   = Label( text_font, max_glyphs=40 )
+    self.track_text  = Label( text_font, max_glyphs=40 )
+    self.artist_text = Label( text_font, max_glyphs=40 )
 
     self.show_text.color   = 0xFFFFFF
     self.host_text.color   = 0xFFFFFF
@@ -84,6 +67,27 @@ class StationPortal():
     self.pyportal.splash.append( self.track_text )
     self.pyportal.splash.append( self.artist_text )
 
+    # placeholder for album art tilegroup, index 5
+    self.pyportal.splash.append( displayio.Group() )
+    self.artworkTileGroupIndex = 5
+
+    # append station slug last so that if it fails, it doens't throw off the sprite indices
+    station_slug = f"{cwd}/{STATION_PLAYLIST_UCS}_slug.bmp"
+    try:
+      self.slug_file = open( station_slug, "rb" )
+      slug_bitmap = displayio.OnDiskBitmap( self.slug_file )
+
+      self.pyportal.splash.append( displayio.TileGrid(
+          slug_bitmap,
+          pixel_shader = displayio.ColorConverter(),
+          width = 1,
+          height = 1,
+          x = 190,
+          y = 170
+        ))
+    except OSError as e:
+      print( f"Unable to open station slug bitmap, station_slug: {station_slug}" )
+
     self.cover_file = None
     self.track_id = None
 
@@ -92,37 +96,39 @@ class StationPortal():
 
     values = self.pyportal.fetch()
     data = json.loads( values )
-    print( "fetched new data, type:", type(data), "data:", data )
+    print( "Fetched new data, type:", type(data) )
+    print( "data:", data )
 
     playlist = data["playlist"][-1]
     curr_track = playlist["playlist"][-1]
 
     if ( self.track_id != curr_track["id"] ):
+      print( "Loading new track, id: ", curr_track["id"] )
       self.track_id = curr_track["id"]
       self._updateTrack( playlist, curr_track )
-
+      print( "Finished loading new track,", curr_track["trackName"] )
 
   def _setShow( self, val ):
-    if ( len( val ) > 40 ):
-      self.show_text.text = ( val )[0:36] + "..."
+    if ( len( val ) > 35 ):
+      self.show_text.text = ( val )[0:32] + "..."
     else:
       self.show_text.text = val
 
   def _setHost( self, val ):
-    if ( len( val ) > 35 ):
-      self.host_text.text = "with " + ( val )[0:31] + "..."
+    if ( len( val ) > 30 ):
+      self.host_text.text = "with " + ( val )[0:30] + "..."
     else:
       self.host_text.text = "with " + val
 
   def _setTrack( self, val ):
-    if ( len( val ) > 40 ):
-      self.track_text.text = ( val )[0:36] + "..."
+    if ( len( val ) > 35 ):
+      self.track_text.text = ( val )[0:32] + "..."
     else:
       self.track_text.text = val
 
   def _setArtist( self, val ):
-    if ( len( val ) > 37 ):
-      self.artist_text.text = ( "by " + val )[0:33] + "..."
+    if ( len( val ) > 35 ):
+      self.artist_text.text = ( "by " + val )[0:30] + "..."
     else:
       self.artist_text.text = "by " + val
 
@@ -160,7 +166,7 @@ class StationPortal():
 
     try:
       image_url = self.pyportal.image_converter_url( source_url, 100, 100 )
-      print( "image_url: ", image_url )
+      print( f"Converting image, image_url: {image_url}" )
 
       cover_filename = "/sd/cover-image.bmp"
 
@@ -169,19 +175,19 @@ class StationPortal():
       self.cover_file = open( cover_filename, "rb" )
       cover_bitmap = displayio.OnDiskBitmap( self.cover_file )
 
-    except Exception as e:
-      print( "error rendering cover art, source_url:", source_url )
+    except ( OSError, KeyError, Exception ) as e:
+      print( f"Error rendering cover art, source_url: {source_url}" )
       cover_bitmap = displayio.Bitmap( 100, 100, 1 )
       cover_bitmap.fill( 0 )
 
-    self.pyportal.splash.append( displayio.TileGrid(
-        cover_bitmap,
-        pixel_shader = displayio.ColorConverter(),
-        width = 1,
-        height = 1,
-        x = 23,
-        y = 130
-      ))
+    self.pyportal.splash[ self.artworkTileGroupIndex ] = displayio.TileGrid(
+      cover_bitmap,
+      pixel_shader = displayio.ColorConverter(),
+      width = 1,
+      height = 1,
+      x = 23,
+      y = 130
+    )
 
 
 if __name__ == "__main__":
@@ -192,8 +198,8 @@ if __name__ == "__main__":
     try:
       stationPortal.fetch()
 
-    except RuntimeError as e:
-      print( "unexpected error occured while fetching new data", e )
+    except ( OSError, RuntimeError ) as e:
+      print( "Unexpected error occured while fetching data", e )
 
     time.sleep(60)
 
