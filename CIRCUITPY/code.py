@@ -93,21 +93,27 @@ class StationPortal():
 
 
   def fetch( self ):
-
     values = self.pyportal.fetch()
     data = json.loads( values )
+
     print( "Fetched new data, type:", type(data) )
     print( "data:", data )
 
-    curr_program = data["onNow"]["program"]
-    curr_track = data["onNow"]["song"]
+    if ( "onNow" not in data ):
+      print( "Invalid data payload" )
+      return
 
-    if ( self.track_id != curr_track["_id"] ):
-      print( "Loading new track, id: ", curr_track["_id"] )
-      self._updateShow( curr_program )
-      self._updateTrack( curr_track )
-      print( "Finished loading new track,", curr_track["trackName"] )
-      self.track_id = curr_track["_id"]
+    if ( "program" in data["onNow"] ):
+      self._updateShow( data["onNow"]["program"] )
+
+    if ( "song" in data["onNow"] ):
+      curr_track = data["onNow"]["song"]
+      curr_track_id = curr_track["_id"]
+
+      if ( self.track_id != curr_track_id ):
+        print( f"Loading new track, id: {curr_track_id}" )
+        self._updateTrack( curr_track )
+        self.track_id = curr_track_id
 
 
   def _updateShow( self, curr_program ):
@@ -124,6 +130,7 @@ class StationPortal():
     else:
       self._setHost( STATION_DEFAULT_HOST_NAME )
 
+
   def _updateTrack( self, curr_track ):
 
     if "trackName" in curr_track:
@@ -138,6 +145,8 @@ class StationPortal():
 
     if "imageURL" in curr_track:
       self._updateCoverart( curr_track["imageURL"] )
+    elif "artworkUrl100" in curr_track:
+      self._updateCoverart( curr_track["artworkUrl100"] )
     else:
       self._updateCoverart( None )
 
