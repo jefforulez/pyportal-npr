@@ -5,7 +5,7 @@ Use an [Adafruit PyPortal](https://www.adafruit.com/product/4116) to show what's
 
 The project defaults to member-supported [WBGO 88.3 FM](https://wbgo.org) Newark Public Radio, the world’s premiere jazz public radio station.
 
-<img src="docs/pyportal-npr-03.png" width="75%" /><br/>
+<img src="docs/pyportal-npr-02.jpg" width="55%" /><br/>
 _Great for listening and learning about Jazz._
 
 ## Prerequisites
@@ -97,7 +97,7 @@ convert ./120x50-source-image.png -type truecolor /Volumes/CIRCUITPY/53c7dbe1e1c
 
 ## Action Shots
 
-<img src="docs/pyportal-npr-02.png" width="50%"><br/>
+<img src="docs/pyportal-npr-01.jpg" width="40%"><br/>
 _The perfect companion for [Amazon Alexa](https://alexa.amazon.com)._
 
 ## Related Info
