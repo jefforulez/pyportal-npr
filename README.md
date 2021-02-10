@@ -97,7 +97,7 @@ convert ./120x50-source-image.png -type truecolor /Volumes/CIRCUITPY/53c7dbe1e1c
 
 ## Action Shots
 
-<img src="docs/pyportal-npr-01.jpg" width="50%"><br/>
+<img src="docs/pyportal-npr-01.jpg" width="100%"><br/>
 _The perfect companion for [Amazon Alexa](https://alexa.amazon.com)._
 
 ## Related Info
