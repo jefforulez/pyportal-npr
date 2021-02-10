@@ -153,7 +153,7 @@ class StationPortal():
     elif "artworkUrl100" in curr_track:
       self._updateCoverart( curr_track["artworkUrl100"] )
     else:
-      self._updateCoverart()
+      self._updateCoverart(None)
 
 
   def _setShow( self, val ):
