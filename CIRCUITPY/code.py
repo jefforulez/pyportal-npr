@@ -127,7 +127,7 @@ class StationPortal():
     else:
       self._setShow( STATION_DEFAULT_SHOW_NAME )
 
-    if "hosts" in curr_program:
+    if "hosts" in curr_program and len(curr_program["hosts"]) > 0:
       if len(curr_program["hosts"]) > 1:
         self._setHost( curr_program["hosts"][0]["name"] + " et al" )
       else:

@@ -76,6 +76,8 @@ STATION_DEFAULT_HOST_NAME = "WRTI Staff"
 STATION_PLAYLIST_UCS      = "53c7dbe1e1c8b9c77b4b9b6e"  # <~ the new UC
 ```
 
+_See more example configs below._
+
 3\. Add a station logo _(optional)_:
 
 Logos should be 120x50-pixel, 24-bit true color bitmaps with a black (`0x000000`) background for the best rending quality.
@@ -95,6 +97,24 @@ convert ./120x50-source-image.png -type truecolor /Volumes/CIRCUITPY/53c7dbe1e1c
 
 `convert` can be installed via [Homebrew](https://formulae.brew.sh/formula/imagemagick), if necessary.
 
+#### Example Station Settings
+
+WBGO 88.3 FM - Newark, NJ
+
+```
+STATION_DEFAULT_SHOW_NAME = "WBGO | The Jazz Source"
+STATION_DEFAULT_HOST_NAME = "WBGO Staff"
+STATION_PLAYLIST_UCS      = "5834b54de1c8aada9f4d7a9e"
+```
+
+KNKS 88.5 FM - Western Washington State
+
+```
+STATION_PLAYLIST_UCS      = "5182a1e0e1c8fe41acbefe4a"
+STATION_DEFAULT_SHOW_NAME = "KNKX | 88.5 FM"
+STATION_DEFAULT_HOST_NAME = "KNKX Staff"
+```
+
 ## Action Shots
 
 <img src="docs/pyportal-npr-01.jpg" width="100%"><br/>
@@ -112,10 +132,6 @@ _The perfect companion for [Amazon Alexa](https://alexa.amazon.com)._
 
 - WBGO Now Playing
   - https://api.composer.nprstations.org/v1/widget/5834b54de1c8aada9f4d7a9e/now?format=json
-
-- Example NPR Composer API UCS values:
-  - WBGO 88.3 FM: `5834b54de1c8aada9f4d7a9e`
-  - WRTI 90.1 FM: `53c7dbe1e1c8b9c77b4b9b6e`
 
 #### Adafruit
 
