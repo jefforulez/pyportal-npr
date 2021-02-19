@@ -110,9 +110,9 @@ STATION_PLAYLIST_UCS      = "5834b54de1c8aada9f4d7a9e"
 KNKS 88.5 FM - Western Washington State
 
 ```
-STATION_PLAYLIST_UCS      = "5182a1e0e1c8fe41acbefe4a"
 STATION_DEFAULT_SHOW_NAME = "KNKX | 88.5 FM"
 STATION_DEFAULT_HOST_NAME = "KNKX Staff"
+STATION_PLAYLIST_UCS      = "5182a1e0e1c8fe41acbefe4a"
 ```
 
 ## Action Shots

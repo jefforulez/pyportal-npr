@@ -130,8 +130,10 @@ class StationPortal():
     if "hosts" in curr_program and len(curr_program["hosts"]) > 0:
       if len(curr_program["hosts"]) > 1:
         self._setHost( curr_program["hosts"][0]["name"] + " et al" )
-      else:
+      elif curr_program["hosts"][0]["name"]:  # test for empty
         self._setHost( curr_program["hosts"][0]["name"] )
+      else:
+        self._setHost( STATION_DEFAULT_HOST_NAME )
     else:
       self._setHost( STATION_DEFAULT_HOST_NAME )
 
